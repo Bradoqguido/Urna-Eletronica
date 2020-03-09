@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         controller.menuConfig();
-
+        // Desenvolvido por Jeferson Eduardo Guido
+        // Curso de Engenharia de software na FAG
     }
 }

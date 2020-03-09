@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff844057-5053-4e86-abd0-9a4db047fe54" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.project" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/edu/urna/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/edu/urna/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583785865371</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="exportacao do projeto para eclipse">
+      <created>1583795740583</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1583795740583</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -144,7 +151,8 @@
     <MESSAGE value="correcoes gerais na classe Controle e otimizacao" />
     <MESSAGE value="criacao da classe Urna + logica de urna + correcoes gerais" />
     <MESSAGE value="criacao da classe Urna + logica de urna + correcoes gerais + inserir novos candidatos removidos" />
-    <option name="LAST_COMMIT_MESSAGE" value="criacao da classe Urna + logica de urna + correcoes gerais + inserir novos candidatos removidos" />
+    <MESSAGE value="exportacao do projeto para eclipse" />
+    <option name="LAST_COMMIT_MESSAGE" value="exportacao do projeto para eclipse" />
   </component>
   <component name="WindowStateProjectService">
     <state x="298" y="59" width="800" height="675" key="#Notifications" timestamp="1583718668732">
@@ -167,11 +175,11 @@
       <screen x="40" y="28" width="1326" height="740" />
     </state>
     <state x="544" y="290" width="307" height="214" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/40.28.1326.740@40.28.1326.740" timestamp="1583720059431" />
-    <state x="310" y="28" width="788" height="738" key="CommitChangelistDialog2" timestamp="1583785865300">
+    <state x="310" y="28" width="788" height="738" key="CommitChangelistDialog2" timestamp="1583795740313">
       <screen x="48" y="28" width="1318" height="740" />
     </state>
     <state x="304" y="28" width="788" height="738" key="CommitChangelistDialog2/40.28.1326.740@40.28.1326.740" timestamp="1583720447091" />
-    <state x="310" y="28" width="788" height="738" key="CommitChangelistDialog2/48.28.1318.740@48.28.1318.740" timestamp="1583785865300" />
+    <state x="310" y="28" width="788" height="738" key="CommitChangelistDialog2/48.28.1318.740@48.28.1318.740" timestamp="1583795740313" />
     <state x="486" y="108" width="424" height="577" key="FileChooserDialogImpl" timestamp="1583720038824">
       <screen x="40" y="28" width="1326" height="740" />
     </state>
@@ -222,11 +230,11 @@
     <state x="287" y="38" key="SettingsEditor/32.28.1334.740@32.28.1334.740" timestamp="1583713852157" />
     <state x="1687" y="160" key="SettingsEditor/40.257.1326.740/1366.0.1680.1050@1366.0.1680.1050" timestamp="1583632019066" />
     <state x="72" y="28" width="1245" height="738" key="SettingsEditor/40.28.1326.740@40.28.1326.740" timestamp="1583720544903" />
-    <state x="304" y="133" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1583785874873">
+    <state x="304" y="133" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1583795750051">
       <screen x="48" y="28" width="1318" height="740" />
     </state>
     <state x="298" y="133" width="800" height="527" key="Vcs.Push.Dialog.v2/40.28.1326.740@40.28.1326.740" timestamp="1583720455947" />
-    <state x="304" y="133" width="800" height="527" key="Vcs.Push.Dialog.v2/48.28.1318.740@48.28.1318.740" timestamp="1583785874873" />
+    <state x="304" y="133" width="800" height="527" key="Vcs.Push.Dialog.v2/48.28.1318.740@48.28.1318.740" timestamp="1583795750051" />
     <state x="437" y="276" key="com.intellij.ide.util.TipDialog" timestamp="1583772351386">
       <screen x="40" y="28" width="1326" height="740" />
     </state>
