@@ -19,6 +19,7 @@ public class Urna {
     public Urna(String categoria, ArrayList<Categoria> categoriasList) {
         this.categoriasList = categoriasList;
         this.categoria = categoria;
+        System.out.println("esta aqui dentro");
     }
 
     // votar na categoria selecionada
