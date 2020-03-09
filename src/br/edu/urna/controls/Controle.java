@@ -6,14 +6,14 @@ import java.util.Scanner;
 
 public class Controle {
 
-    private ArrayList categoriasList = new ArrayList();
+    private ArrayList<Categoria> categoriasList = new ArrayList<>();
 
     private Scanner aux = new Scanner(System.in);
 
     public Controle () {}
 
-    public void menuAdmin() {
-        System.out.println("O que deseja fazer:");
+    public void menuConfig() {
+        System.out.println("Menu de configuracoes, escolha uma opcao:");
         System.out.println("1 - Visualizar categorias e carregar candidatos pre configurados");
         System.out.println("2 - Visualizar categorias e inserir novos candidatos");
         System.out.println("3 - Buscar os candidatos por categoria");
@@ -41,11 +41,18 @@ public class Controle {
                 case 3:
                     buscarCategoria();
                     break;
+                case 4:
+                    iniciarVotacao();
+                    break;
+                default:
+                    System.out.println("Digite apenas os numeros, das opcoes");
+                    menuConfig();
+                    break;
             }
         } catch (Error e) {
             System.out.println("Nenhuma opcao selecionada, selecione uma ao menos!");
             System.out.println("Lembre-se de usar apenas numeros!");
-            menuAdmin();
+            menuConfig();
         }
     }
 
@@ -63,7 +70,7 @@ public class Controle {
             switch (codigo) {
                 case 0:
                     System.out.println("Retornando ao menu principal!");
-                    menuAdmin();
+                    menuConfig();
                     break;
                 case 1:
                     System.out.println("Categoria selecionada: Filme");
@@ -83,7 +90,7 @@ public class Controle {
                     break;
                 default:
                     System.out.println("Nenhuma categoria selecionada, retornando ao menu principal!");
-                    menuAdmin();
+                    menuConfig();
                     break;
             }
 
@@ -144,7 +151,7 @@ public class Controle {
             switch (codigo) {
                 case 0:
                     System.out.println("Retornando ao menu principal!");
-                    menuAdmin();
+                    menuConfig();
                     break;
                 case 1:
                     System.out.println("Categoria selecionada: Filme");
@@ -164,7 +171,7 @@ public class Controle {
                     break;
                 default:
                     System.out.println("Nenhuma categoria selecionada, retornando ao menu principal!");
-                    menuAdmin();
+                    menuConfig();
                     break;
             }
 
@@ -179,14 +186,50 @@ public class Controle {
 
     private void mostrarDadosDeCategoria(String categoria) {
         for (int i = 1; i < 6; i++) {
-            Categoria mc = (Categoria) this.categoriasList.get(i);
+            Categoria mc = this.categoriasList.get(i);
             System.out.println(mc.getCodigo() + " - " + mc.getNome());
         }
     }
 
-    public void iniciarVotacao(String categoria) {
-        System.out.println("Categoria e votados cadastrados!");
-        System.out.println("Iniciando votacao!");
-        // chamar classe de votacao
+    public void iniciarVotacao() {
+        verCategorias();
+
+        try {
+            int codigo = this.aux.nextInt();
+            String categoria = "";
+            switch (codigo) {
+                case 0:
+                    System.out.println("Retornando ao menu principal!");
+                    menuConfig();
+                    break;
+                case 1:
+                    System.out.println("Categoria selecionada: Filme");
+                    categoria = "Filme";
+                    break;
+                case 2:
+                    System.out.println("Categoria selecionada: Música");
+                    categoria = "Música";
+                    break;
+                case 3:
+                    System.out.println("Categoria selecionada: Escritor");
+                    categoria = "Escritor";
+                    break;
+                case 4:
+                    System.out.println("Categoria selecionada: Autor");
+                    categoria = "Autor";
+                    break;
+                default:
+                    System.out.println("Nenhuma categoria selecionada, retornando ao menu principal!");
+                    menuConfig();
+                    break;
+            }
+
+            System.out.println("Iniciando votacao para: " + categoria);
+            new Urna(categoria, categoriasList);
+
+        } catch (Error e) {
+            System.out.println("\nDigite apenas numeros!!!");
+            iniciarVotacao();
+        }
     }
 }

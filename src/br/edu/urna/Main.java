@@ -9,7 +9,7 @@ public class Main {
     private static Controle controller = new Controle();
 
     public static void main(String[] args) {
-        controller.menuAdmin();
+        controller.menuConfig();
 
     }
 }
