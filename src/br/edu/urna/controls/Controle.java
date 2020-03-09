@@ -6,21 +6,21 @@ import java.util.Scanner;
 
 public class Controle {
 
-    private ArrayList<Categoria> categoriasList = new ArrayList<Categoria>();
+    private ArrayList<Categoria> categoriasList = new ArrayList<>();
 
     private Scanner aux = new Scanner(System.in);
 
     public Controle () {}
 
     public void menuConfig() {
+        System.out.println();
         System.out.println("Menu de configuracoes, escolha uma opcao:");
-        System.out.println("1 - Visualizar categorias e carregar candidatos pre configurados");
-        System.out.println("2 - Visualizar categorias e inserir 5 novos candidatos");
+        System.out.println("1 - carregar candidatos pre configurados para todas as categorias");
+        // System.out.println("2 - Visualizar categorias e inserir 5 novos candidatos");
         System.out.println("3 - Buscar os candidatos por categoria");
         System.out.println("4 - Iniciar a votacao de UMA categoria");
-        // System.out.println("5 - Iniciar a votacao de TODAS as categorias");
-        System.out.println("6 - DELETAR TODAS as categorias e candidatos");
-        // System.out.println("7 - DELETAR um candidato de uma categoria especifica");
+        System.out.println("5 - DELETAR TODAS as categorias e candidatos");
+        // System.out.println("6 - DELETAR um candidato de uma categoria especifica");
         System.out.println("0 - Sair do sistema");
 
         acoesMenu();
@@ -47,9 +47,8 @@ public class Controle {
                 case 4:
                     iniciarVotacao();
                     break;
-
-                case 6:
-                    categoriasList = new ArrayList<Categoria>();
+                case 5:
+                    categoriasList = new ArrayList<>();
                     break;
                 default:
                     System.out.println("Digite apenas os numeros, das opcoes");
@@ -67,6 +66,7 @@ public class Controle {
     }
 
     public void verCategorias() {
+        System.out.println();
         System.out.println("Digite o numero da categoria para selecionar ela:");
         System.out.println("1 - Filme,\n2 - Música,\n3 - Escritor,\n4 - Autor,\n0 - Retornar ao menu principal");
     }
@@ -87,6 +87,8 @@ public class Controle {
         if (categoria.equals("Autor")) {
             inserirCandidatos(categoria);
         }
+
+
 
         inserirCandidatosNaCategoriaSelecionada();
     }
@@ -151,8 +153,10 @@ public class Controle {
 
 
         System.out.println("Iniciando votacao para: " + categoria);
-        new Urna(categoria, categoriasList);
+        Urna urna = new Urna(categoria, categoriasList);
+        urna.realizarVotacao();
 
+        System.out.println("Votacao encerrada!");
         System.out.println("Voltando ao menu principal");
         menuConfig();
     }

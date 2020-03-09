@@ -15,6 +15,13 @@ public class Categoria {
         this.nome = nome;
     }
 
+    public Categoria(Categoria candidato) {
+        this.categoria = candidato.getCategoria();
+        this.codigo = candidato.getCodigo();
+        this.nome = candidato.getNome();
+        this.voto = candidato.getVotos();
+    }
+
     public String getNome() {
         return this.nome;
     }
