@@ -58,7 +58,7 @@ public class Controle {
 
     public void verCategorias() {
         System.out.println("Digite o numero da categoria que deseja fazer a votacao:");
-        System.out.println("1 - Filme,\n 2 -  Música,\n 3 - Escritor,\n 4 - Autor,\n 0 - Retornar ao menu principal");
+        System.out.println("1 - Filme,\n2 -  Música,\n3 - Escritor,\n4 - Autor,\n0 - Retornar ao menu principal");
     }
 
     public void selecionarCategoria() {
@@ -108,7 +108,11 @@ public class Controle {
         for (int i = 1; i < 6; i++) {
             System.out.println("Digite o nome do candidato: ");
             String nome = this.aux.nextLine();
-            categoriasList.add(new Categoria(categoria, i, nome));
+
+            System.out.println("Digite o codigo do candidato: ");
+            int codigo = this.aux.nextInt();
+
+            categoriasList.add(new Categoria(categoria, codigo, nome));
         }
     }
 
@@ -131,7 +135,7 @@ public class Controle {
                 }
                 break;
             case "Autor":
-                for (int i = 1; i < 6; i++) {
+                for (int i = 0; i < this.categoriasList.size(); i++) {
                     categoriasList.add(new Categoria(categoria, i, ("Autor simbolico " + i)));
                 }
                 break;
@@ -140,6 +144,7 @@ public class Controle {
                 System.exit(0);
                 break;
         }
+        menuConfig();
     }
 
     public void buscarCategoria() {
@@ -185,7 +190,7 @@ public class Controle {
     }
 
     private void mostrarDadosDeCategoria(String categoria) {
-        for (int i = 1; i < 6; i++) {
+        for (int i = 0; i < this.categoriasList.size(); i++) {
             Categoria mc = this.categoriasList.get(i);
             System.out.println(mc.getCodigo() + " - " + mc.getNome());
         }
