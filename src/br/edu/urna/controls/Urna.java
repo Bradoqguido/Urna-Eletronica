@@ -10,16 +10,17 @@ public class Urna {
     private ArrayList<Categoria> categoriasList = new ArrayList<>();
     private ArrayList<Categoria> empatadosList = new ArrayList<>();
     private String categoria = "";
-    private int votosNulos = 0;
+    private int votosNulos = 0, votosBrancos = 0, numEleitores = 0, countVotos = 0;
     private Categoria vencedor = new Categoria();
 
     private Scanner aux = new Scanner(System.in);
 
     public Urna() {}
 
-    public Urna(String categoria, ArrayList<Categoria> categoriasList) {
+    public Urna(String categoria, ArrayList<Categoria> categoriasList, int numEleitores) {
         this.categoriasList = categoriasList;
         this.categoria = categoria;
+        this.numEleitores = numEleitores;
     }
 
     public void realizarVotacao() {
@@ -42,14 +43,18 @@ public class Urna {
 
         try {
 
-            while (codigo != 007) {
+            while (codigo != 007 || countVotos == numEleitores) {
                 System.out.println("Qual " + categoria + " deseja votar?");
                 listarCandidatos(false);
+                System.out.println("Codigo: 0 | Voto Branco");
                 codigo = entrada.nextInt();
-                if (codigo == 007) {
+
+                armazenarVotos(codigo);
+                countVotos++;
+
+                if (codigo == 007 || countVotos == numEleitores) {
                     break;
                 }
-                armazenarVotos(codigo);
             }
 
         } catch (Error e) {
@@ -71,6 +76,11 @@ public class Urna {
                     }
                 }
             }
+        }
+
+        if (codigoCandidato == 0) {
+            votosBrancos++;
+            codigoExiste = true;
         }
 
         if (!codigoExiste) {
@@ -105,6 +115,7 @@ public class Urna {
         System.out.println();
         System.out.println("Houve um empate");
         System.out.println("A quantidade de votos nulos é " + votosNulos);
+        System.out.println("A quantidade de votos brancos é " + votosBrancos);
 
         for (int i = 0; i < this.empatadosList.size(); i++) {
             Categoria mc = this.empatadosList.get(i);
@@ -118,6 +129,7 @@ public class Urna {
         System.out.println();
         System.out.println("O vencedor da eleição é: " + vencedor.getNome());
         System.out.println("A quantidade de votos nulos é " + votosNulos);
+        System.out.println("A quantidade de votos brancos é " + votosBrancos);
         listarCandidatos(true);
     }
 

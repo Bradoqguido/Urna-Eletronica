@@ -88,8 +88,6 @@ public class Controle {
             inserirCandidatos(categoria);
         }
 
-
-
         inserirCandidatosNaCategoriaSelecionada();
     }
 
@@ -108,27 +106,26 @@ public class Controle {
 
     private void preConfigCandidatos() {
         System.out.println("Carregando os candidatos da categoria: " + "Filme");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Filme", i, ("Velozes e Furiosos " + i)));
         }
 
         System.out.println("Carregando os candidatos da categoria: " + "Autor");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Autor", i, ("Autor simbolico " + i)));
         }
 
         System.out.println("Carregando os candidatos da categoria: " + "Música");
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Música", i, (i + "ª sinfonia de beethoven")));
         }
 
         System.out.println("Carregando os candidatos da categoria: " + "Escritor");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Escritor", i, ("Escritor simbolico " + i)));
         }
 
         menuConfig();
-
     }
 
     public void buscarCategoria() {
@@ -151,14 +148,43 @@ public class Controle {
         verCategorias();
         String categoria = selecionarCategoria();
 
+        int numEleitores = getNumeroDeEleitores();
+
+        if (numEleitores <= 0) {
+            System.out.println("Numero de eleitores igual ou menor que 0");
+            System.out.println("Retornando ao menu principal!");
+            menuConfig();
+        }
 
         System.out.println("Iniciando votacao para: " + categoria);
-        Urna urna = new Urna(categoria, categoriasList);
+        Urna urna = new Urna(categoria, categoriasList, numEleitores);
         urna.realizarVotacao();
 
         System.out.println("Votacao encerrada!");
         System.out.println("Voltando ao menu principal");
         menuConfig();
+    }
+
+    public int getNumeroDeEleitores() {
+        try {
+            System.out.println("Digite o numero de eleitores que você estima para esta eleição");
+            System.out.println("Ou digite 0 para voltar ao menu principal");
+            int num = this.aux.nextInt();
+
+            if (num <= 0) {
+                System.out.println("Numero de eleitores igual ou menor que 0");
+                System.out.println("Retornando ao menu principal!");
+                menuConfig();
+            } else {
+                return num;
+            }
+
+        } catch (Error e) {
+            System.out.println("\nDigite apenas numeros!!!");
+            System.out.println("Tente novamente!");
+            getNumeroDeEleitores();
+        }
+        return 0;
     }
 
     public String selecionarCategoria() {
