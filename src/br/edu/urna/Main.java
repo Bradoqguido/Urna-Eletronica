@@ -1,6 +1,8 @@
 package br.edu.urna;
 
+import br.edu.urna.components.ControleForm;
 import br.edu.urna.controls.Controle;
+
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
     private static Controle controller = new Controle();
 
     public static void main(String[] args) {
-        controller.menuConfig();
+        new ControleForm();
         // Desenvolvido por Jeferson Eduardo Guido
         // Curso de Engenharia de software na FAG
     }

@@ -2,8 +2,8 @@ package br.edu.urna.controls;
 
 import br.edu.urna.models.Categoria;
 
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Urna {
 
@@ -12,8 +12,6 @@ public class Urna {
     private String categoria = "";
     private int votosNulos = 0, votosBrancos = 0, numEleitores = 0, countVotos = 0;
     private Categoria vencedor = new Categoria();
-
-    private Scanner aux = new Scanner(System.in);
 
     public Urna() {}
 
@@ -24,10 +22,9 @@ public class Urna {
     }
 
     public void realizarVotacao() {
-        System.out.println();
         coletarInformacoes();
         verificarVencedor();
-
+        verificarEmpate();
 
         if (empatadosList.size() > 0) {
             exibirResultadoEmpate();
@@ -38,17 +35,18 @@ public class Urna {
     }
 
     private void coletarInformacoes() {
-        Scanner entrada = new Scanner(System.in);
         int codigo = 0;
 
         try {
-
             while (codigo != 007 || countVotos == numEleitores) {
-                System.out.println("Qual " + categoria + " deseja votar?");
-                listarCandidatos(false);
-                System.out.println("Codigo: 0 | Voto Branco");
-                codigo = entrada.nextInt();
+                StringBuilder strb = new StringBuilder();
+                strb.append("Qual " + categoria + " deseja votar?").append("\n");
+                strb.append(listarCandidatos(false));
+                strb.append("Codigo: 0 | Voto Branco").append("\n");
 
+                String x = JOptionPane.showInputDialog(null, strb.toString());
+
+                codigo = Integer.parseInt(x);
                 armazenarVotos(codigo);
                 countVotos++;
 
@@ -58,7 +56,7 @@ public class Urna {
             }
 
         } catch (Error e) {
-            System.out.println("Digite apenas o numero do candidato");
+            JOptionPane.showMessageDialog(null, "Digite apenas o numero do candidato");
             coletarInformacoes();
         }
     }
@@ -67,8 +65,7 @@ public class Urna {
         boolean codigoExiste = false;
 
         if (codigoCandidato != 007) {
-            for (int i = 0; i < this.categoriasList.size(); i++) {
-                Categoria mc = this.categoriasList.get(i);
+            for (Categoria mc : this.categoriasList) {
                 if (mc.getCategoria().equals((categoria))) {
                     if (mc.getCodigo() == codigoCandidato) {
                         mc.updateVoto();
@@ -89,61 +86,58 @@ public class Urna {
     }
 
     private void verificarVencedor() {
-
-        for (int i = 0; i < this.categoriasList.size(); i++) {
-            Categoria mc = this.categoriasList.get(i);
+        for (Categoria mc : this.categoriasList) {
             if (mc.getCategoria().equals((categoria))) {
                 if (mc.getVotos() > vencedor.getVotos()) {
                     vencedor = new Categoria(mc);
                 }
             }
         }
-
-        verificarEmpate();
     }
     private void verificarEmpate() {
-        for (int i = 0; i < this.categoriasList.size(); i++) {
-            Categoria mc = this.categoriasList.get(i);
+        for (Categoria mc : this.categoriasList) {
             if (mc.getCategoria().equals((categoria))) {
-                if (mc.getVotos() == vencedor.getVotos()) {
+                if (mc.getVotos() == vencedor.getVotos() && !(mc.getNome().equals(vencedor.getNome()))) {
                     empatadosList.add(mc);
                 }
             }
         }
     }
     private void exibirResultadoEmpate() {
-        System.out.println();
-        System.out.println("Houve um empate");
-        System.out.println("A quantidade de votos nulos é " + votosNulos);
-        System.out.println("A quantidade de votos brancos é " + votosBrancos);
+        StringBuilder strb = new StringBuilder();
+        strb.append("Houve um empate").append("\n\n");
+        strb.append("A quantidade de votos nulos é ").append(votosNulos).append("\n");
+        strb.append("A quantidade de votos brancos é ").append(votosBrancos).append("\n\n");
 
-        for (int i = 0; i < this.empatadosList.size(); i++) {
-            Categoria mc = this.empatadosList.get(i);
+        for (Categoria mc : this.empatadosList) {
             if (mc.getCategoria().equals((categoria))) {
-                System.out.println("Nome: " + mc.getNome() + " | Votos: " + mc.getVotos());
+                strb.append("Nome: ").append(mc.getNome()).append(" | Votos: ").append(mc.getVotos()).append("\n");
             }
         }
+
+        JOptionPane.showMessageDialog(null, strb.toString());
     }
 
     private void exibirResultado() {
-        System.out.println();
-        System.out.println("O vencedor da eleição é: " + vencedor.getNome());
-        System.out.println("A quantidade de votos nulos é " + votosNulos);
-        System.out.println("A quantidade de votos brancos é " + votosBrancos);
-        listarCandidatos(true);
+        StringBuilder strb = new StringBuilder();
+        strb.append("O vencedor da eleição é: ").append(vencedor.getNome()).append("\n\n");
+        strb.append("A quantidade de votos nulos é ").append(votosNulos).append("\n");
+        strb.append("A quantidade de votos brancos é ").append(votosBrancos).append("\n\n");
+        strb.append(listarCandidatos(true));
+        JOptionPane.showMessageDialog(null, strb.toString());
     }
 
-    private void listarCandidatos(boolean exibirvotos) {
-        for (int i = 0; i < this.categoriasList.size(); i++) {
-            Categoria mc = this.categoriasList.get(i);
+    private String listarCandidatos(boolean exibirvotos) {
+        StringBuilder strb = new StringBuilder();
+        for (Categoria mc : this.categoriasList) {
             if (mc.getCategoria().equals((categoria))) {
                 if (exibirvotos) {
-                    System.out.println("Nome: " + mc.getNome() + " | Votos: " + mc.getVotos());
+                    strb.append("Nome: ").append(mc.getNome()).append(" | Votos: ").append(mc.getVotos()).append("\n");
                 } else {
-                    System.out.println("Codigo: " + mc.getCodigo() + " | Nome: " + mc.getNome());
+                    strb.append("Codigo: ").append(mc.getCodigo()).append(" | Nome: ").append(mc.getNome()).append("\n");
                 }
             }
         }
-        System.out.println();
+        return strb.toString();
     }
 }

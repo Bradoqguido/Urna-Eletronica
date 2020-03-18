@@ -1,6 +1,9 @@
 package br.edu.urna.controls;
 
+import br.edu.urna.components.ControleForm;
 import br.edu.urna.models.Categoria;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,13 +16,16 @@ public class Controle {
     public Controle () {}
 
     public void menuConfig() {
+
+        new ControleForm();
+
         System.out.println();
-        System.out.println("Menu de configuracoes, escolha uma opcao:");
+        System.out.println("Menu de configuracoes, escolha uma opção:");
         System.out.println("1 - carregar candidatos pre configurados para todas as categorias");
         // System.out.println("2 - Visualizar categorias e inserir 5 novos candidatos");
-        System.out.println("3 - Buscar os candidatos por categoria");
-        System.out.println("4 - Iniciar a votacao de UMA categoria");
-        System.out.println("5 - DELETAR TODAS as categorias e candidatos");
+        System.out.println("2 - Buscar os candidatos por categoria");
+        System.out.println("3 - Iniciar a votacao de UMA categoria");
+        System.out.println("4 - DELETAR TODAS as categorias e candidatos");
         // System.out.println("6 - DELETAR um candidato de uma categoria especifica");
         System.out.println("0 - Sair do sistema");
 
@@ -48,7 +54,7 @@ public class Controle {
                     iniciarVotacao();
                     break;
                 case 5:
-                    categoriasList = new ArrayList<>();
+                    categoriasList.clear();
                     break;
                 default:
                     System.out.println("Digite apenas os numeros, das opcoes");
@@ -61,18 +67,21 @@ public class Controle {
             System.out.println("Lembre-se de usar apenas numeros!");
             menuConfig();
         }
-
-        menuConfig();
     }
 
-    public void verCategorias() {
-        System.out.println();
-        System.out.println("Digite o numero da categoria para selecionar ela:");
-        System.out.println("1 - Filme,\n2 - Música,\n3 - Escritor,\n4 - Autor,\n0 - Retornar ao menu principal");
+    public int verCategorias() {
+        try {
+            String codigo = JOptionPane.showInputDialog(null,
+                ("Digite o numero da categoria para selecionar ela:\n1 - Filme,\n2 - Música,\n3 - Escritor,\n4 - Autor,\n0 - Retornar ao menu principal"));
+            return Integer.parseInt(codigo);
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(null, "Digite apenas os números das op\u00e7ões!\nTente novamente!");
+            verCategorias();
+        }
+        return 0;
     }
 
-    public void inserirCandidatosNaCategoriaSelecionada() {
-        verCategorias();
+    private void inserirCandidatosNaCategoriaSelecionada() {
         String categoria = selecionarCategoria();
 
         if (categoria.equals("Filme")) {
@@ -104,84 +113,69 @@ public class Controle {
         }
     }
 
-    private void preConfigCandidatos() {
-        System.out.println("Carregando os candidatos da categoria: " + "Filme");
+    public void preConfigCandidatos() {
+
         for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Filme", i, ("Velozes e Furiosos " + i)));
         }
 
-        System.out.println("Carregando os candidatos da categoria: " + "Autor");
         for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Autor", i, ("Autor simbolico " + i)));
         }
 
-        System.out.println("Carregando os candidatos da categoria: " + "Música");
         for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Música", i, (i + "ª sinfonia de beethoven")));
         }
 
-        System.out.println("Carregando os candidatos da categoria: " + "Escritor");
         for (int i = 1; i <= 5; i++) {
             categoriasList.add(new Categoria("Escritor", i, ("Escritor simbolico " + i)));
         }
 
-        menuConfig();
+        JOptionPane.showMessageDialog(null, ("Candidatos das categorias: Filme, Autor, Escritores e Música\nCarregados!"));
     }
 
     public void buscarCategoria() {
-        verCategorias();
         String categoria = selecionarCategoria();
-        mostrarDadosDeCategoria(categoria);
-        buscarCategoria();
+        if (!categoria.equals("")) {
+            mostrarDadosDeCategoria(categoria);
+        }
     }
 
     private void mostrarDadosDeCategoria(String categoria) {
-        for (int i = 0; i < this.categoriasList.size(); i++) {
-            Categoria mc = this.categoriasList.get(i);
+        StringBuilder msg = new StringBuilder();
+        for (Categoria mc : this.categoriasList) {
             if (mc.getCategoria().equals((categoria))) {
-                System.out.println("Codigo: " + mc.getCodigo() + " | Nome: " + mc.getNome());
+                msg.append("Codigo: ").append(mc.getCodigo()).append(" | Nome: ").append(mc.getNome()).append("\n");
             }
         }
+        JOptionPane.showMessageDialog(null, "Categoria selecionada: " + categoria + "\n" + msg.toString());
     }
 
     public void iniciarVotacao() {
-        verCategorias();
         String categoria = selecionarCategoria();
 
-        int numEleitores = getNumeroDeEleitores();
+        if (!categoria.equals("")) {
+            int numEleitores = getNumeroDeEleitores();
 
-        if (numEleitores <= 0) {
-            System.out.println("Numero de eleitores igual ou menor que 0");
-            System.out.println("Retornando ao menu principal!");
-            menuConfig();
+            if (numEleitores <= 0) {
+                JOptionPane.showMessageDialog(null, ("Numero de eleitores igual ou menor que 0\nRetornando ao menu principal!"));
+            } else {
+                JOptionPane.showMessageDialog(null, ("Iniciando votacao para: " + categoria));
+                Urna urna = new Urna(categoria, categoriasList, numEleitores);
+                urna.realizarVotacao();
+
+                JOptionPane.showMessageDialog(null, ("Votacao encerrada!\nVoltando ao menu principal"));
+            }
         }
-
-        System.out.println("Iniciando votacao para: " + categoria);
-        Urna urna = new Urna(categoria, categoriasList, numEleitores);
-        urna.realizarVotacao();
-
-        System.out.println("Votacao encerrada!");
-        System.out.println("Voltando ao menu principal");
-        menuConfig();
     }
 
     public int getNumeroDeEleitores() {
         try {
-            System.out.println("Digite o numero de eleitores que você estima para esta eleição");
-            System.out.println("Ou digite 0 para voltar ao menu principal");
-            int num = this.aux.nextInt();
-
-            if (num <= 0) {
-                System.out.println("Numero de eleitores igual ou menor que 0");
-                System.out.println("Retornando ao menu principal!");
-                menuConfig();
-            } else {
-                return num;
-            }
-
+            String str = JOptionPane.showInputDialog(null, ("Digite o numero de eleitores que você estima para esta eleição\nOu digite 0 para voltar ao menu principal"));
+            int num = Integer.parseInt(str);
+            return num;
         } catch (Error e) {
-            System.out.println("\nDigite apenas numeros!!!");
-            System.out.println("Tente novamente!");
+            JOptionPane.showMessageDialog(null, ("Digite apenas numeros!!!\nTente novamente!"));
             getNumeroDeEleitores();
         }
         return 0;
@@ -191,38 +185,30 @@ public class Controle {
         String categoria = "";
 
         try {
-            int codigo = this.aux.nextInt();
+            int codigo = verCategorias();
             switch (codigo) {
                 case 0:
-                    System.out.println("Retornando ao menu principal!");
-                    menuConfig();
+                    // retorna ao menu principal
                     break;
                 case 1:
-                    System.out.println("Categoria selecionada: Filme");
                     categoria = "Filme";
                     break;
                 case 2:
-                    System.out.println("Categoria selecionada: Música");
                     categoria = "Música";
                     break;
                 case 3:
-                    System.out.println("Categoria selecionada: Escritor");
                     categoria = "Escritor";
                     break;
                 case 4:
-                    System.out.println("Categoria selecionada: Autor");
                     categoria = "Autor";
                     break;
                 default:
-                    System.out.println("Nenhuma categoria selecionada, retornando ao menu principal!");
-                    menuConfig();
+                    JOptionPane.showMessageDialog(null, ("Nenhuma categoria selecionada, retornando ao menu principal!"));
                     break;
             }
 
         } catch (Error e) {
-            System.out.println("\nDigite apenas numeros!!!");
-            System.out.println("Voltando a menu principal");
-            menuConfig();
+            JOptionPane.showMessageDialog(null, ("Digite apenas os números das op\u00e7ões!\nVoltando ao menu principal!"));
         }
 
         return categoria;
